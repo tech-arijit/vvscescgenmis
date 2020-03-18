@@ -1,0 +1,42 @@
+.x-admin-text {
+    padding: 15px 10px;
+    background: #ebbd7d;
+    color: #000;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.b-l {
+    border-left: 1px solid #999;
+}
+
+.b-r {
+    border-right: 1px solid #999;
+}
+
+.page-heading {
+    font-size: 14px;
+    padding: 5px 5px 5px 0;
+    font-weight: 900;
+    // padding: 15px 10px;
+    // color: #fff;
+}
+
+.page-heading2 {
+    font-size: 18px;
+    padding: 5px;
+    font-weight: 900;
+    padding: 14px 10px;
+    color: #FFD559;
+}
+
+.x-navigation.x-navigation-horizontal>li>a.user-icon {
+    padding: 10px;
+}
+
+.x-navigation.x-navigation-horizontal>li>a>img {
+    width: 100%;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 50%;
+}

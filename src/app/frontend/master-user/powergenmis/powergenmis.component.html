@@ -1,0 +1,379 @@
+<div class="page-content-wrap">
+
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="panel panel-default">
+                <div class="panel-body panel-body-table">
+                    <div class="form-horizontal" role="form">
+                        <div class="col-md-12 p-0">
+                            <form [formGroup]="powergen">
+                                <div class="form-group">
+
+                                    <label class="col-xs-4 col-sm-2 col-md-1 control-label text-left">Details:</label>
+                                    <div class="col-xs-12 col-sm-4 col-md-2">
+                                        <ng-select [items]="parameters" bindLabel="ParameterName" bindValue="ParameterID" formControlName="parametersId" placeholder="" [(ngModel)]="selParameter" class="form-control">
+                                        </ng-select>
+                                    </div>
+                                    <!-- <label class="col-xs-4 col-sm-2 col-md-1 control-label text-left">Dated On:</label> -->
+                                    <div class="col-xs-9 col-sm-4 col-md-3">
+                                        <!-- <input type="date" formControlName="sdate" class="form-control"> -->
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Dated On</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="pdate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-2">
+                                        <button class="btn btn-sm btn-info" (click)="searchParameterData()">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <hr />
+
+                    <div *ngIf="show">
+                        <div style="display: none;">
+                            <div class="clearfix"></div>
+                            <h3 class="report-heading cl-bv1"> {{ genText }} (YTD)
+                                <!-- <div class="btn-group pull-right mr-5">
+                  <button type="button" class="btn btn-success btn-sm">Execl Report</button>
+                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><span
+                      class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header" (click)="exportgmtddataexcel()">Generation (MTD) Excel</li>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                  </ul>
+                </div> -->
+                            </h3>
+                            <div class="panel-body panel-body-table">
+                                <div class="table-responsive">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div>
+                            <div class="clearfix"></div>
+                            <h3 class="report-heading cl-bv1 w-100">{{ genText }} (MTD) <span>(units in {{ genmtdata['BBGS']['UOM'] }})</span></h3>
+                            <div class="table-responsive">
+                                <google-chart #chart [title]="" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options3" [width]="width" [height]="height">
+                                </google-chart>
+                            </div>
+                            <br />
+                            <div class="btn-group pull-right mr-5">
+                                <button type="button" class="btn btn-success btn-sm">Export</button>
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><span
+                      class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation" class="dropdown-header"><a href="javascript:void(0)" (click)="exportgmtddataexcel()">Power Generation MIS (MTD)</a></li>
+                                    <!-- <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li> -->
+                                </ul>
+                            </div>
+                            <div class="panel-body panel-body-table">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-striped table-actions" id="gmtddata-table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="14">
+                                                    <h4 class="f-11 text-right">Year {{this.FinYear}}</h4>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>Stations</th>
+                                                <th class="text-center">UOM</th>
+                                                <th class="text-center">APR</th>
+                                                <th class="text-center">MAY</th>
+                                                <th class="text-center">JUN</th>
+                                                <th class="text-center">JUL</th>
+                                                <th class="text-center">AUG</th>
+                                                <th class="text-center">SEP</th>
+                                                <th class="text-center">OCT</th>
+                                                <th class="text-center">NOV</th>
+                                                <th class="text-center">DEC</th>
+                                                <th class="text-center">JAN</th>
+                                                <th class="text-center">FEB</th>
+                                                <th class="text-center">MAR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>BBGS</td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['BBGS']['UOM'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['APR_MON'],year: genmtdata['BBGS']['APR_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['APR'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['MAY_MON'],year: genmtdata['BBGS']['MAY_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['MAY'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['JUN_MON'],year: genmtdata['BBGS']['JUN_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['JUN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['JUL_MON'],year: genmtdata['BBGS']['JUL_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['JUL'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['AUG_MON'],year: genmtdata['BBGS']['AUG_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['AUG'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['SEP_MON'],year: genmtdata['BBGS']['SEP_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['SEP'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['OCT_MON'],year: genmtdata['BBGS']['OCT_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['OCT'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['NOV_MON'],year: genmtdata['BBGS']['NOV_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['NOV'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['DEC_MON'],year: genmtdata['BBGS']['DEC_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['DEC'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['JAN_MON'],year: genmtdata['BBGS']['JAN_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['JAN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['FEB_MON'],year: genmtdata['BBGS']['FEB_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['FEB'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['BBGS']['STATION'],month: genmtdata['BBGS']['MAR_MON'],year: genmtdata['BBGS']['MAR_YEAR'],parametersId: genId }">{{ genmtdata['BBGS']['MAR'] }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>SGS</td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['SGS']['UOM'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['APR_MON'],year: genmtdata['SGS']['APR_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['APR'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['MAY_MON'],year: genmtdata['SGS']['MAY_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['MAY'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['JUN_MON'],year: genmtdata['SGS']['JUN_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['JUN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['JUL_MON'],year: genmtdata['SGS']['JUL_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['JUL'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['AUG_MON'],year: genmtdata['SGS']['AUG_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['AUG'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['SEP_MON'],year: genmtdata['SGS']['SEP_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['SEP'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['OCT_MON'],year: genmtdata['SGS']['OCT_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['OCT'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['NOV_MON'],year: genmtdata['SGS']['NOV_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['NOV'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['DEC_MON'],year: genmtdata['SGS']['DEC_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['DEC'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['JAN_MON'],year: genmtdata['SGS']['JAN_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['JAN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['FEB_MON'],year: genmtdata['SGS']['FEB_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['FEB'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['SGS']['STATION'],month: genmtdata['SGS']['MAR_MON'],year: genmtdata['SGS']['MAR_YEAR'],parametersId: genId }">{{ genmtdata['SGS']['MAR'] }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>HEL</td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['HEL']['UOM'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['APR_MON'],year: genmtdata['HEL']['APR_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['APR'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['MAY_MON'],year: genmtdata['HEL']['MAY_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['MAY'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['JUN_MON'],year: genmtdata['HEL']['JUN_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['JUN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['JUL_MON'],year: genmtdata['HEL']['JUL_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['JUL'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['AUG_MON'],year: genmtdata['HEL']['AUG_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['AUG'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['SEP_MON'],year: genmtdata['HEL']['SEP_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['SEP'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['OCT_MON'],year: genmtdata['HEL']['OCT_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['OCT'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['NOV_MON'],year: genmtdata['HEL']['NOV_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['NOV'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['DEC_MON'],year: genmtdata['HEL']['DEC_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['DEC'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['JAN_MON'],year: genmtdata['HEL']['JAN_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['JAN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['FEB_MON'],year: genmtdata['HEL']['FEB_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['FEB'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['HEL']['STATION'],month: genmtdata['HEL']['MAR_MON'],year: genmtdata['HEL']['MAR_YEAR'],parametersId: genId }">{{ genmtdata['HEL']['MAR'] }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>DIL</td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['DIL']['UOM'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['APR_MON'],year: genmtdata['DIL']['APR_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['APR'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['MAY_MON'],year: genmtdata['DIL']['MAY_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['MAY'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['JUN_MON'],year: genmtdata['DIL']['JUN_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['JUN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['JUL_MON'],year: genmtdata['DIL']['JUL_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['JUL'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['AUG_MON'],year: genmtdata['DIL']['AUG_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['AUG'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['SEP_MON'],year: genmtdata['DIL']['SEP_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['SEP'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['OCT_MON'],year: genmtdata['DIL']['OCT_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['OCT'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['NOV_MON'],year: genmtdata['DIL']['NOV_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['NOV'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['DEC_MON'],year: genmtdata['DIL']['DEC_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['DEC'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['JAN_MON'],year: genmtdata['DIL']['JAN_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['JAN'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['FEB_MON'],year: genmtdata['DIL']['FEB_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['FEB'] }}</a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a target="_blank" [routerLink]="['/user/app/genmtd/']" [queryParams]="{ station: genmtdata['DIL']['STATION'],month: genmtdata['DIL']['MAR_MON'],year: genmtdata['DIL']['MAR_YEAR'],parametersId: genId }">{{ genmtdata['DIL']['MAR'] }}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>TOTAL</td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['UOM'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['APR'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['MAY'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['JUN'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['JUL'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['AUG'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['SEP'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['OCT'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['NOV'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['DEC'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['JAN'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['FEB'] }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ genmtdata['TOTAL']['MAR'] }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center pt-10">
+                                    <div class="col-md-3">
+                                        <a target="_blank" routerLink="/user/app/unitwisemtd" [queryParams]="{ station: 'BBGS',sdate: genDate,parametersId: genId }" class="btn btn-info btn-sm btn-block"><i class="fa fa-bar-chart"></i>Unit Wise MTD - BBGS</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a target="_blank" routerLink="/user/app/unitwisemtd" [queryParams]="{ station: 'SGS',sdate: genDate,parametersId: genId }" class="btn btn-info btn-sm btn-block"><i class="fa fa-bar-chart"></i>Unit Wise MTD - SGS</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a target="_blank" routerLink="/user/app/unitwisemtd" [queryParams]="{ station: 'HEL',sdate: genDate,parametersId: genId }" class="btn btn-info btn-sm btn-block"><i class="fa fa-bar-chart"></i>Unit Wise MTD - HEL</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a target="_blank" routerLink="/user/app/unitwisemtd" [queryParams]="{ station: 'DIL',sdate: genDate,parametersId: genId }" class="btn btn-info btn-sm btn-block"><i class="fa fa-bar-chart"></i>Unit Wise MTD - DIL</a>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title-box w-100">
+                            <h3>
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title-box">
+                            <h3>GENERATION (MTD)</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body padding-0">
+                        <div class="table-responsive">
+
+                        </div>
+                        <br/>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div> -->
+    </div>

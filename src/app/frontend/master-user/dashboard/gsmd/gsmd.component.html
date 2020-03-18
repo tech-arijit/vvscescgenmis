@@ -1,0 +1,51 @@
+<div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title">GENERATION STATION MONTH WISE DAILY
+            <button type="button"class="close" (click)="onNoClick()" data-dismiss="modal">&times;</button>
+        </h4>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="table-responsive dHeight-1">
+
+            <table class="table table-bordered table-striped table-actions">
+                <thead>
+                    <tr>
+                        <th>Station</th>
+                    <th>{{StationName}}</th>
+                    </tr>
+                    <tr>
+                        <th>Month</th>
+                        <th>{{Month}}</th>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <th>{{Year}}</th>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <th class="text-center">UOM</th>
+                        <th class="text-center">Unit 1</th>
+                        <th class="text-center">Unit 2</th>
+                        <th class="text-center" *ngIf = "StationName == 'BBGS'">Unit 3</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Gmdd of GenMtdDailyData">
+                        <td>{{Gmdd['REPORT_DATE']}}</td>
+                        <td class="text-center">{{Gmdd['UOM']}}</td>
+                        <td class="text-center">{{Gmdd['UNIT1']}}</td>
+                        <td class="text-center">{{Gmdd['UNIT2']}}</td>
+                        <td class="text-center" *ngIf = "StationName == 'BBGS'">{{Gmdd['UNIT3']}}</td>
+                        <td class="text-center">{{Gmdd['TOTAL']}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

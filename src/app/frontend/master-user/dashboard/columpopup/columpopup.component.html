@@ -1,0 +1,67 @@
+<!-- <div class="col-md-12"> -->
+<div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title">GENERATION (MTD) <span *ngIf="GenStationUnitData">(units in {{GenStationUnitData[0]['UOM']}})</span>
+            <button type="button" class="close" (click)="onNoColumClick()" data-dismiss="modal">&times;</button>
+        </h4>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <google-chart #chart
+          [title]="title"
+          [type]="type"
+          [data]="data"
+          [columnNames]="columnNames"
+          [options]="options"
+          [width]="width"
+          [height]="height">
+      </google-chart>
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped table-actions">
+                <thead>
+                <tr><th colspan="14">Station : {{ StationName }} | Year : {{ FinYear }}</th></tr>
+                    <tr>
+                        <th>Unit Name</th>
+                        <th class="text-center">UOM</th>
+                        <th class="text-center">APR</th>
+                        <th class="text-center">MAY</th>
+                        <th class="text-center">JUN</th>
+                        <th class="text-center">JUL</th>
+                        <th class="text-center">AUG</th>
+                        <th class="text-center">SEP</th>
+                        <th class="text-center">OCT</th>
+                        <th class="text-center">NOV</th>
+                        <th class="text-center">DEC</th>
+                        <th class="text-center">JAN</th>
+                        <th class="text-center">FEB</th>
+                        <th class="text-center">MAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let GStnData of GenStationUnitData">
+                    <td>{{GStnData.UNIT_NAME}}</td>
+                        <td class="text-center">{{GStnData.UOM}}</td>
+                        <td class="text-center">{{GStnData.APR}}</td>
+                        <td class="text-center">{{GStnData.MAY}}</td>
+                        <td class="text-center">{{GStnData.JUN}}</td>
+                        <td class="text-center">{{GStnData.JUL}}</td>
+                        <td class="text-center">{{GStnData.AUG}}</td>
+                        <td class="text-center">{{GStnData.SEP}}</td>
+                        <td class="text-center">{{GStnData.OCT}}</td>
+                        <td class="text-center">{{GStnData.NOV}}</td>
+                        <td class="text-center">{{GStnData.DEC}}</td>
+                        <td class="text-center">{{GStnData.JAN}}</td>
+                        <td class="text-center">{{GStnData.FEB}}</td>
+                        <td class="text-center">{{GStnData.MAR}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- </div> -->

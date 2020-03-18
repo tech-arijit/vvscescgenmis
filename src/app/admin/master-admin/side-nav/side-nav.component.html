@@ -1,0 +1,33 @@
+<div class="page-sidebar page-sidebar-fixed scroll">
+    <!-- START X-NAVIGATION -->
+    <ul class="x-navigation">
+        <li class="xn-logo">
+            <a>Admin Panel</a>
+            <a class="x-navigation-control" (click)="navMinimize();"></a>
+        </li>
+        <li class="xn-profile">
+            <a class="profile-mini">
+                <img src="./assets/img/logo.png" alt="BV Surveys" />
+            </a>
+            <div class="profile">
+                <div class="profile-image">
+                    <img src="./assets/img/logo.png" alt="BV Surveys" />
+                </div>
+                <div class="profile-data">
+                    <div class="profile-data-name">Online Survey Portal</div>
+                    <!-- <div class="profile-data-title">Web Developer/Designer</div> -->
+                </div>
+
+            </div>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/admin/app/dashboard"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboards</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a href="javascript:void(0)" (click)='adminlogout()' ><span class="fa fa-sign-out"></span> <span class="xn-text">Logout</span></a>
+        </li>
+
+
+    </ul>
+    <!-- END X-NAVIGATION -->
+</div>

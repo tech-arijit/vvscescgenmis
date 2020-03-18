@@ -1,0 +1,235 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import '../src/assets/css/theme-default.css';
+.bg-bv1 {
+    // background: #4c4d3d !important;
+    background: #18756d !important;
+    color: #fff !important;
+    font-weight: 900;
+}
+
+.bg-bv1 .panel-title {
+    color: #fff !important;
+}
+
+.bg-bv2 {
+    background: #c20035 !important;
+}
+
+.bg-bv3 {
+    background: #4c4d3e !important;
+}
+
+.cl-bv1 {
+    color: #259dab;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.report-heading {
+    // font-size: 14px;
+    // padding-left: 10px;
+    // margin-bottom: 0;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #2574ab !important;
+    padding-left: 10px !important;
+}
+
+.report-heading span {
+    font-size: 12px;
+    color: #46474a;
+    font-weight: 400;
+    line-height: 12px;
+}
+
+.panel {
+    border: 1px solid #c8ced3;
+}
+
+.registration-body .ng-dropdown-panel {
+    width: 90%;
+}
+
+.registration-body .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 5px;
+    width: 100%;
+    background: #fff;
+    color: #000;
+}
+
+.registration-body .ng-select .ng-select-container {
+    color: #eee !important;
+}
+
+.registration-body .ng-select .ng-select-container {
+    padding-left: 0px;
+}
+
+.registration-body .form-group {
+    margin-bottom: 5px;
+}
+
+.registration-body .ng-select .ng-select-container .ng-value-container .ng-input>input {
+    padding-left: 0px;
+}
+
+.ng-select.form-control {
+    // padding: 9px 0px;
+    padding: 0;
+}
+
+.ng-dropdown-panel .scroll-host {
+    width: 100%;
+}
+
+.ng-dropdown-panel {
+    width: 100%;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 3px 5px;
+    width: 100%;
+    background: #D6EAF8;
+    color: #000000;
+    border: 1px solid #D5D5D5;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+    background: #3498DB;
+    color: #fff;
+}
+
+.ng-select .ng-select-container {
+    color: #555 !important;
+}
+
+.ng-select .ng-select-container {
+    // padding-left: 10px;
+    padding: 5px 10px;
+    font-weight: 999;
+    font-family: monospace;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+    padding-left: 9px;
+}
+
+.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode="indeterminate"] {
+    margin: 0 auto;
+}
+
+.pl-0 {
+    padding-left: 5px;
+}
+
+.pr-10 {
+    padding-right: 10px;
+}
+
+.pt-10 {
+    padding-top: 10px !important;
+}
+
+.pb-5 {
+    padding-bottom: 5px !important;
+}
+
+.pb-10 {
+    padding-bottom: 10px !important;
+}
+
+.p-5 {
+    padding: 5px;
+}
+
+.footer {
+    // height: 40px;
+    // background: rgb(0, 0, 0);
+    background: linear-gradient(to right, #2574ab 0%, #259dab 100%);
+    width: 100%;
+    padding: 10px;
+    margin: 0px;
+    float: left;
+    list-style: none;
+    display: block;
+    z-index: 3;
+    color: #fff;
+    position: fixed;
+    padding-right: 250px;
+    bottom: 0;
+}
+
+.footer a {
+    color: #eee;
+    font-weight: bold;
+}
+
+.ftr-right {
+    text-align: right;
+}
+
+.table .label {
+    font-size: 10px;
+}
+
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 1px solid rgb(106, 161, 243);
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mb-0 {
+    margin-bottom: 0px;
+}
+
+.mat-dialog-container {
+    padding: 0 !important;
+}
+
+.modal-content {
+    border: 0;
+}
+
+.f-11 {
+    font-size: 11px;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+    color: rgba(0, 0, 0, 1);
+    font-weight: 500;
+}
+
+.sec-Heading {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #2574ab !important;
+    padding-right: 15px !important;
+}
+
+// html,
+// body {
+//     height: 100%;
+// }
+// body {
+//     margin: 0;
+//     font-family: sans-serif;
+// }
+@media screen and (min-device-width: 200px) and (max-device-width: 980px) {
+    .footer {
+        padding-right: 0;
+    }
+    .ftr-right,
+    .ftr-left {
+        text-align: center;
+    }
+}

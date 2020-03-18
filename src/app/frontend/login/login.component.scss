@@ -1,0 +1,20 @@
+.login-container {
+    height: 100vh;
+}
+
+h2.projectname {
+    text-align: center;
+    color: #fff;
+    font-size: 28px;
+    text-shadow: 3px 2px 4px #000;
+}
+
+.footer {
+    padding-right: 0;
+}
+
+@media only screen and (max-width: 584px) {
+    .w-100 {
+        width: 100%;
+    }
+}

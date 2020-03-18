@@ -1,0 +1,652 @@
+<div class="page-content-wrap">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box w-100">
+                        <h3><span class="sec-Heading">Generation (YTD)</span> (units in MU)
+                            <form [formGroup]="dashData" class="pull-right">
+                                <div class="form-group">
+                                    <!-- <label class="col-md-4 control-label text-left">Dated On:</label> -->
+                                    <div class="col-md-8">
+                                        <!-- <input type="date" class="form-control"> -->
+                                        <!-- <mat-form-field class="example-full-width">
+                                            <mat-label>Choose a date</mat-label>
+                                            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field> -->
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Dated On</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="sdate" [(ngModel)]="onDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
+                                        <button (click)="dashSearchByDate()" class="btn btn-sm btn-info">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </h3>
+                    </div>
+                </div>
+                <div class="panel-body padding-0 pt-10 pb-10">
+                    <div class="col-md-6">
+                        <div class="bg-cesc">
+                            <div class="panel-heading">
+                                <div class="panel-title-box text-center w-100">
+                                    <img src="assets/img/cesc.png" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="panel panel-default mb-0">
+                                    <!-- <div class="panel-heading">
+                                    <div class="panel-title-box text-center w-100">
+                                        <img src="assets/img/cesc.png" />
+                                    </div>
+                                </div> -->
+                                    <div class="panel-body padding-0">
+                                        <rg-gauge-chart [canvasWidth]="bcanvasWidth" [needleValue]="bneedleValue" [centralLabel]="bcentralLabel" [options]="boptions" [name]="bname" [bottomLabel]="bbottomLabel"></rg-gauge-chart>
+                                        <p class="text-center"><small>MU</small></p>
+                                        <div class="col-md-9">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 15%;">YTD</td>
+                                                        <td style="width: 25%;">Unit 1</td>
+                                                        <td style="width: 40%;"><span *ngIf="YtdData">{{ YtdData['Units_Generated'].BBGS_YTD_UNIT1}}</span></td>
+                                                        <td style="width: 20%;">MU</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>YTD</td>
+                                                        <td>Unit 2</td>
+                                                        <td><span *ngIf="YtdData">{{ YtdData['Units_Generated']['BBGS_YTD_UNIT2']}}</span></td>
+                                                        <td>MU</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>YTD</td>
+                                                        <td>Unit 3</td>
+                                                        <td><span *ngIf="YtdData">{{ YtdData['Units_Generated']['BBGS_YTD_UNIT3']}}</span></td>
+                                                        <td>MU</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-3 text-center pl-0">
+                                            <button class="btn btn-info btn-block p-5" data-toggle="modal" (click)="openGomGomStyle(1,onDate)">YTD <br/>Trend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="panel panel-default mb-0">
+                                    <!-- <div class="panel-heading">
+                                    <div class="panel-title-box text-center w-100">
+                                        <img src="assets/img/hel.png" />
+                                    </div>
+                                </div> -->
+                                    <div class="panel-body padding-0">
+                                        <rg-gauge-chart [canvasWidth]="scanvasWidth" [needleValue]="sneedleValue" [centralLabel]="scentralLabel" [options]="soptions" [name]="sname" [bottomLabel]="sbottomLabel"></rg-gauge-chart>
+                                        <p class="text-center"><small>MU</small></p>
+                                        <div class="col-md-9">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 15%;">YTD</td>
+                                                        <td style="width: 25%;">Unit 1</td>
+                                                        <td style="width: 40%;">
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['SGS_YTD_UNIT1'] ? YtdData['Units_Generated']['SGS_YTD_UNIT1'] : 0}}</span>
+                                                        </td>
+                                                        <td style="width: 20%;">MU</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>YTD</td>
+                                                        <td>Unit 2</td>
+                                                        <td>
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['SGS_YTD_UNIT2'] ? YtdData['Units_Generated']['SGS_YTD_UNIT2'] : 0}}</span>
+                                                        </td>
+                                                        <td>MU</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-3 text-center pl-0">
+                                            <button class="btn btn-info btn-block p-5" (click)="openGomGomStyle(2,onDate)">YTD <br/>Trend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-hel">
+                            <div class="col-md-12 p-0">
+                                <div class="panel panel-default mb-0">
+                                    <div class="panel-heading">
+                                        <div class="panel-title-box text-center w-100">
+                                            <img src="assets/img/hel.png" />
+                                        </div>
+                                    </div>
+                                    <div class="panel-body padding-0">
+                                        <rg-gauge-chart [canvasWidth]="hcanvasWidth" [needleValue]="hneedleValue" [centralLabel]="hcentralLabel" [options]="hoptions" [name]="hname" [bottomLabel]="hbottomLabel"></rg-gauge-chart>
+                                        <p class="text-center"><small>MU</small></p>
+                                        <div class="col-md-9">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 15%;">YTD</td>
+                                                        <td style="width: 30%;">Unit 1</td>
+                                                        <td style="width: 35%;">
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['HEL_YTD_UNIT1'] ? YtdData['Units_Generated']['HEL_YTD_UNIT1'] : 0}}</span>
+                                                        </td>
+                                                        <td style="width: 20%;">MU</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>YTD</td>
+                                                        <td>Unit 2</td>
+                                                        <td>
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['HEL_YTD_UNIT2'] ? YtdData['Units_Generated']['HEL_YTD_UNIT2'] : 0}}</span>
+                                                        </td>
+                                                        <td>MU</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-3 text-center pl-0">
+                                            <button class="btn btn-info btn-block p-5" (click)="openGomGomStyle(3,onDate)">YTD <br/>Trend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-dil">
+                            <div class="col-md-12 p-0">
+                                <div class="panel panel-default mb-0">
+                                    <div class="panel-heading">
+                                        <div class="panel-title-box text-center w-100">
+                                            <img src="assets/img/dil.png" />
+                                        </div>
+                                    </div>
+                                    <div class="panel-body padding-0">
+                                        <rg-gauge-chart [canvasWidth]="dcanvasWidth" [needleValue]="dneedleValue" [centralLabel]="dcentralLabel" [options]="doptions" [name]="dname" [bottomLabel]="dbottomLabel"></rg-gauge-chart>
+                                        <p class="text-center"><small>MU</small></p>
+                                        <div class="col-md-9">
+                                            <table class="table table-bordered table-striped table-actions">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 15%;">YTD</td>
+                                                        <td style="width: 30%;">Unit 1</td>
+                                                        <td style="width: 35%;">
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['DIL_YTD_UNIT1'] ? YtdData['Units_Generated']['DIL_YTD_UNIT1'] : 0}}</span>
+                                                        </td>
+                                                        <td style="width: 20%;">MU</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>YTD</td>
+                                                        <td>Unit 2</td>
+                                                        <td>
+                                                            <span *ngIf="YtdData">{{ YtdData['Units_Generated']['DIL_YTD_UNIT2'] ? YtdData['Units_Generated']['DIL_YTD_UNIT2'] : 0}}</span>
+                                                        </td>
+                                                        <td>MU</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-3 text-center pl-0">
+                                            <button class="btn btn-info btn-block p-5" (click)="openGomGomStyle(4,onDate)">YTD <br/>Trend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box w-100">
+                        <h3><span class="sec-Heading">GENERATION (MTD)</span> <span>(units in MU)</span></h3>
+                    </div>
+                </div>
+                <div class="panel-body padding-0">
+                    <div class="table-responsive">
+                        <google-chart #chart [title]="" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options3" [width]="width" [height]="height">
+                        </google-chart>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <h4 class="f-11 pr-10 text-right">Year <span *ngIf="FinYear">{{this.FinYear}}</span></h4>
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                                <tr>
+                                    <th>Stations</th>
+                                    <th>UOM</th>
+                                    <th class="text-center">APR</th>
+                                    <th class="text-center">MAY</th>
+                                    <th class="text-center">JUN</th>
+                                    <th class="text-center">JUL</th>
+                                    <th class="text-center">AUG</th>
+                                    <th class="text-center">SEP</th>
+                                    <th class="text-center">OCT</th>
+                                    <th class="text-center">NOV</th>
+                                    <th class="text-center">DEC</th>
+                                    <th class="text-center">JAN</th>
+                                    <th class="text-center">FEB</th>
+                                    <th class="text-center">MAR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BBGS</td>
+                                    <td><span *ngIf="GenMtdData.BBGS">{{ GenMtdData['BBGS']['UOM'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['APR_MON'],GenMtdData['BBGS']['APR_YEAR'])">{{ GenMtdData['BBGS']['APR'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['MAY_MON'],GenMtdData['BBGS']['MAY_YEAR'])">{{ GenMtdData['BBGS']['MAY'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['JUN_MON'],GenMtdData['BBGS']['JUN_YEAR'])">{{ GenMtdData['BBGS']['JUN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['JUL_MON'],GenMtdData['BBGS']['JUL_YEAR'])">{{ GenMtdData['BBGS']['JUL'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['AUG_MON'],GenMtdData['BBGS']['AUG_YEAR'])">{{ GenMtdData['BBGS']['AUG'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['SEP_MON'],GenMtdData['BBGS']['SEP_YEAR'])">{{ GenMtdData['BBGS']['SEP'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['OCT_MON'],GenMtdData['BBGS']['OCT_YEAR'])">{{ GenMtdData['BBGS']['OCT'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['NOV_MON'],GenMtdData['BBGS']['NOV_YEAR'])">{{ GenMtdData['BBGS']['NOV'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['DEC_MON'],GenMtdData['BBGS']['DEC_YEAR'])">{{ GenMtdData['BBGS']['DEC'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['JAN_MON'],GenMtdData['BBGS']['JAN_YEAR'])">{{ GenMtdData['BBGS']['JAN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['FEB_MON'],GenMtdData['BBGS']['FEB_YEAR'])">{{ GenMtdData['BBGS']['FEB'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.BBGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['BBGS']['STATION'],GenMtdData['BBGS']['MAR_MON'],GenMtdData['BBGS']['MAR_YEAR'])">{{ GenMtdData['BBGS']['MAR'] }}</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>SGS</td>
+                                    <td><span *ngIf="GenMtdData.SGS">{{ GenMtdData['SGS']['UOM'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['APR_MON'],GenMtdData['SGS']['APR_YEAR'])">{{ GenMtdData['SGS']['APR'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['MAY_MON'],GenMtdData['SGS']['MAY_YEAR'])">{{ GenMtdData['SGS']['MAY'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['JUN_MON'],GenMtdData['SGS']['JUN_YEAR'])">{{ GenMtdData['SGS']['JUN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['JUL_MON'],GenMtdData['SGS']['JUL_YEAR'])">{{ GenMtdData['SGS']['JUL'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['AUG_MON'],GenMtdData['SGS']['AUG_YEAR'])">{{ GenMtdData['SGS']['AUG'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['SEP_MON'],GenMtdData['SGS']['SEP_YEAR'])">{{ GenMtdData['SGS']['SEP'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['OCT_MON'],GenMtdData['SGS']['OCT_YEAR'])">{{ GenMtdData['SGS']['OCT'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['NOV_MON'],GenMtdData['SGS']['NOV_YEAR'])">{{ GenMtdData['SGS']['NOV'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['DEC_MON'],GenMtdData['SGS']['DEC_YEAR'])">{{ GenMtdData['SGS']['DEC'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['JAN_MON'],GenMtdData['SGS']['JAN_YEAR'])">{{ GenMtdData['SGS']['JAN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['FEB_MON'],GenMtdData['SGS']['FEB_YEAR'])">{{ GenMtdData['SGS']['FEB'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.SGS"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['SGS']['STATION'],GenMtdData['SGS']['MAR_MON'],GenMtdData['SGS']['MAR_YEAR'])">{{ GenMtdData['SGS']['MAR'] }}</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>HEL</td>
+                                    <td><span *ngIf="GenMtdData.HEL">{{ GenMtdData['HEL']['UOM'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['APR_MON'],GenMtdData['HEL']['APR_YEAR'])">{{ GenMtdData['HEL']['APR'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['MAY_MON'],GenMtdData['HEL']['MAY_YEAR'])">{{ GenMtdData['HEL']['MAY'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['JUN_MON'],GenMtdData['HEL']['JUN_YEAR'])">{{ GenMtdData['HEL']['JUN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['JUL_MON'],GenMtdData['HEL']['JUL_YEAR'])">{{ GenMtdData['HEL']['JUL'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['AUG_MON'],GenMtdData['HEL']['AUG_YEAR'])">{{ GenMtdData['HEL']['AUG'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['SEP_MON'],GenMtdData['HEL']['SEP_YEAR'])">{{ GenMtdData['HEL']['SEP'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['OCT_MON'],GenMtdData['HEL']['OCT_YEAR'])">{{ GenMtdData['HEL']['OCT'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['NOV_MON'],GenMtdData['HEL']['NOV_YEAR'])">{{ GenMtdData['HEL']['NOV'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['DEC_MON'],GenMtdData['HEL']['DEC_YEAR'])">{{ GenMtdData['HEL']['DEC'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['JAN_MON'],GenMtdData['HEL']['JAN_YEAR'])">{{ GenMtdData['HEL']['JAN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['FEB_MON'],GenMtdData['HEL']['FEB_YEAR'])">{{ GenMtdData['HEL']['FEB'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.HEL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['HEL']['STATION'],GenMtdData['HEL']['MAR_MON'],GenMtdData['HEL']['MAR_YEAR'])">{{ GenMtdData['HEL']['MAR'] }}</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DIL</td>
+                                    <td><span *ngIf="GenMtdData.DIL">{{ GenMtdData['DIL']['UOM'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['APR_MON'],GenMtdData['DIL']['APR_YEAR'])">{{ GenMtdData['DIL']['APR'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['MAY_MON'],GenMtdData['DIL']['MAY_YEAR'])">{{ GenMtdData['DIL']['MAY'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['JUN_MON'],GenMtdData['DIL']['JUN_YEAR'])">{{ GenMtdData['DIL']['JUN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['JUL_MON'],GenMtdData['DIL']['JUL_YEAR'])">{{ GenMtdData['DIL']['JUL'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['AUG_MON'],GenMtdData['DIL']['AUG_YEAR'])">{{ GenMtdData['DIL']['AUG'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['SEP_MON'],GenMtdData['DIL']['SEP_YEAR'])">{{ GenMtdData['DIL']['SEP'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['OCT_MON'],GenMtdData['DIL']['OCT_YEAR'])">{{ GenMtdData['DIL']['OCT'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['NOV_MON'],GenMtdData['DIL']['NOV_YEAR'])">{{ GenMtdData['DIL']['NOV'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['DEC_MON'],GenMtdData['DIL']['DEC_YEAR'])">{{ GenMtdData['DIL']['DEC'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['JAN_MON'],GenMtdData['DIL']['JAN_YEAR'])">{{ GenMtdData['DIL']['JAN'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['FEB_MON'],GenMtdData['DIL']['FEB_YEAR'])">{{ GenMtdData['DIL']['FEB'] }}</a></span>
+                                    </td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.DIL"><a href="javascript:void(0)" (click)="openGomGomGsmdStyle(GenMtdData['DIL']['STATION'],GenMtdData['DIL']['MAR_MON'],GenMtdData['DIL']['MAR_YEAR'])">{{ GenMtdData['DIL']['MAR'] }}</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TOTAL</td>
+                                    <td><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['UOM'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['APR'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['MAY'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['JUN'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['JUL'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['AUG'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['SEP'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['OCT'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['NOV'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['DEC'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['JAN'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['FEB'] }}</span></td>
+                                    <td class="text-center"><span *ngIf="GenMtdData.TOTAL">{{ GenMtdData['TOTAL']['MAR'] }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center pt-10">
+                        <div class="col-md-3">
+                            <button class="btn btn-info btn-sm btn-block" (click)="openGomGomColumStyle('BBGS',GenMtdDate)"><i
+                  class="fa fa-bar-chart"></i>Unit Wise MTD - BBGS</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info btn-sm btn-block" (click)="openGomGomColumStyle('SGS',GenMtdDate)"><i
+                  class="fa fa-bar-chart"></i>Unit Wise MTD - SGS</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info btn-sm btn-block" (click)="openGomGomColumStyle('HEL',GenMtdDate)"><i
+                  class="fa fa-bar-chart"></i>Unit Wise MTD - HEL</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info btn-sm btn-block" (click)="openGomGomColumStyle('DIL',GenMtdDate)"><i
+                  class="fa fa-bar-chart"></i>Unit Wise MTD - DIL</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box w-100">
+                        <h3><span class="sec-Heading">Coal Summary</span> <span>(units in {{ coalSummaryData['UOM'] }})</span></h3>
+                    </div>
+                </div>
+                <div class="panel-body padding-0">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">OPENING STOCK</h6>
+                                    <google-chart #chart [title]="" [type]="csoscol_type" [data]="csoscol_data" [columnNames]="csoscol_columnNames" [options]="csoscol_options" [width]="csoscol_width" [height]="csoscol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">RECEIVED</h6>
+                                    <google-chart #chart [title]="" [type]="csrcol_type" [data]="csrcol_data" [columnNames]="csrcol_columnNames" [options]="csrcol_options" [width]="csrcol_width" [height]="csrcol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">CONSUMPTION</h6>
+                                    <google-chart #chart [title]="" [type]="csccol_type" [data]="csccol_data" [columnNames]="csccol_columnNames" [options]="csccol_options" [width]="csccol_width" [height]="csccol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">CLOSING STOCK </h6>
+                                    <google-chart #chart [title]="" [type]="cscscol_type" [data]="cscscol_data" [columnNames]="cscscol_columnNames" [options]="cscscol_options" [width]="cscscol_width" [height]="cscscol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" class="text-center">BBGS</th>
+                                    <th colspan="4" class="text-center">SGS</th>
+                                    <th colspan="4" class="text-center">HEL</th>
+                                    <th colspan="4" class="text-center">DIL</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">{{ coalSummaryData['BBGS_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['BBGS_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['BBGS_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['BBGS_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['SGS_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['SGS_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['SGS_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['SGS_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['HEL_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['HEL_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['HEL_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['HEL_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['DIL_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['DIL_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['DIL_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ coalSummaryData['DIL_CLOSING_STOCK'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title-box w-100">
+                        <h3><span class="sec-Heading">LDO Summary</span> <span>(units in {{ ldoSummaryData['UOM'] }})</span></h3>
+                    </div>
+                </div>
+                <div class="panel-body padding-0">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">OPENING STOCK</h6>
+                                    <google-chart #chart [title]="" [type]="lscscol_type" [data]="lscscol_data" [columnNames]="lscscol_columnNames" [options]="lscscol_options" [width]="lscscol_width" [height]="lscscol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">RECEIVED</h6>
+                                    <google-chart #chart [title]="" [type]="lsrcol_type" [data]="lsrcol_data" [columnNames]="lsrcol_columnNames" [options]="lsrcol_options" [width]="lsrcol_width" [height]="lsrcol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">CONSUMPTION</h6>
+                                    <google-chart #chart [title]="" [type]="lsccol_type" [data]="lsccol_data" [columnNames]="lsccol_columnNames" [options]="lsccol_options" [width]="lsccol_width" [height]="lsccol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title-box">
+                                    <h6 class="f-11">CLOSING STOCK </h6>
+                                    <google-chart #chart [title]="" [type]="lsclscol_type" [data]="lsclscol_data" [columnNames]="lsclscol_columnNames" [options]="lsclscol_options" [width]="lsclscol_width" [height]="lsclscol_height">
+                                    </google-chart>
+                                </div>
+                            </div>
+                            <div class="panel-body padding-0">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" class="text-center">BBGS</th>
+                                    <th colspan="4" class="text-center">SGS</th>
+                                    <th colspan="4" class="text-center">HEL</th>
+                                    <th colspan="4" class="text-center">DIL</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                    <th class="text-center">Op. Stock</th>
+                                    <th class="text-center">Received</th>
+                                    <th class="text-center">Consump.</th>
+                                    <th class="text-center">Cl. Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">{{ ldoSummaryData['BBGS_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['BBGS_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['BBGS_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['BBGS_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['SGS_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['SGS_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['SGS_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['SGS_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['HEL_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['HEL_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['HEL_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['HEL_CLOSING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['DIL_OPENING_STOCK'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['DIL_RECEIVED'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['DIL_CONSUMPTION'] }}</td>
+                                    <td class="text-center">{{ ldoSummaryData['DIL_CLOSING_STOCK'] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

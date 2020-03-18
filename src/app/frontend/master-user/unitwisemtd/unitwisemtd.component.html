@@ -1,0 +1,77 @@
+<div class="page-content-wrap">
+
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="panel panel-default">
+                <div class="panel-body panel-body-table">
+                    <google-chart #chart [title]="title" [type]="type" [data]="data" [columnNames]="columnNames" [options]="options" [width]="width" [height]="height">
+                    </google-chart>
+                    <br />
+                    <div>
+                        <div class="clearfix"></div>
+                        <h3 class="report-heading cl-bv1">Unit Wise MTD <span> (units in {{ dailymtd['GenStationUnitData'][0]['UOM'] }})</span>
+                        </h3>
+                        <div class="btn-group pull-right mr-5">
+                            <button type="button" class="btn btn-success btn-sm">Export</button>
+                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation" class="dropdown-header"><a href="javascript:void(0)" (click)="exportgmtddataexcel()">Unit Wise Power Generation MIS (MTD)</a></li>
+                                <!-- <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li> -->
+                            </ul>
+                        </div>
+                        <div class="panel-body panel-body-table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-actions" id="unitgmtddata-table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="14">Station : {{ StationName }} | Year : {{ FinYear }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Unit Name</th>
+                                            <th class="text-center">UOM</th>
+                                            <th class="text-center">APR</th>
+                                            <th class="text-center">MAY</th>
+                                            <th class="text-center">JUN</th>
+                                            <th class="text-center">JUL</th>
+                                            <th class="text-center">AUG</th>
+                                            <th class="text-center">SEP</th>
+                                            <th class="text-center">OCT</th>
+                                            <th class="text-center">NOV</th>
+                                            <th class="text-center">DEC</th>
+                                            <th class="text-center">JAN</th>
+                                            <th class="text-center">FEB</th>
+                                            <th class="text-center">MAR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of dailymtd['GenStationUnitData'];">
+                                            <td>{{ row.UNIT_NAME }}</td>
+                                            <td class="text-center">{{ row.UOM }}</td>
+                                            <td class="text-center">{{ row.APR }}</td>
+                                            <td class="text-center">{{ row.MAY }}</td>
+                                            <td class="text-center">{{ row.JUN }}</td>
+                                            <td class="text-center">{{ row.JUL }}</td>
+                                            <td class="text-center">{{ row.AUG }}</td>
+                                            <td class="text-center">{{ row.SEP }}</td>
+                                            <td class="text-center">{{ row.OCT }}</td>
+                                            <td class="text-center">{{ row.NOV }}</td>
+                                            <td class="text-center">{{ row.DEC }}</td>
+                                            <td class="text-center">{{ row.JAN }}</td>
+                                            <td class="text-center">{{ row.FEB }}</td>
+                                            <td class="text-center">{{ row.MAR }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <br/>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

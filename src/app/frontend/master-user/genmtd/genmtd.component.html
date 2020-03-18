@@ -1,0 +1,71 @@
+<div class="page-content-wrap">
+
+  <div class="row">
+    <div class="col-md-12 p-0">
+      <div class="panel panel-default">
+        <div class="panel-body panel-body-table">
+
+          <div>
+            <div class="clearfix"></div>
+            <h3 class="report-heading cl-bv1">GENERATION (MTD)
+              <div class="btn-group pull-right mr-5">
+                <button type="button" class="btn btn-success btn-sm">Export</button>
+                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><span
+                    class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li role="presentation" class="dropdown-header"><a href="javascript:void(0)" (click)="exportgmtddataexcel()">Generation (MTD)</a></li>
+                  <!-- <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li> -->
+                </ul>
+              </div>
+            </h3>
+            <div class="panel-body panel-body-table">
+              <div class="table-responsive">
+                <div class="col-md-6 p-0">
+                  <table class="table table-bordered table-striped table-actions" id="gmtd-table">
+                    <thead>
+                      <tr>
+                        <th>Station</th>
+                        <th>{{ dailymtddata['StationName'] }}</th>
+                      </tr>
+                      <tr>
+                        <th>Month</th>
+                        <th>{{ dailymtddata['Month'] }}</th>
+                      </tr>
+                      <tr>
+                        <th>Year</th>
+                        <th>{{ dailymtddata['Year'] }}</th>
+                      </tr>
+                      <tr>
+                        <th>Date</th>
+                        <th class="text-center">UOM</th>
+                        <th class="text-center">Unit 1</th>
+                        <th class="text-center">Unit 2</th>
+                        <th class="text-center" *ngIf="dailymtddata['StationName'] == 'BBGS'">Unit 3</th>
+                        <th class="text-center">TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of dailymtddata['GenMTDDailyData'];">
+                        <td>{{ row.REPORT_DATE }}</td>
+                        <td class="text-center">{{ row.UOM }}</td>
+                        <td class="text-center">{{ row.UNIT1 }}</td>
+                        <td class="text-center">{{ row.UNIT2 }}</td>
+                        <td class="text-center" *ngIf="dailymtddata['StationName'] == 'BBGS'">{{ row.UNIT3 }}</td>
+                        <td class="text-center">{{ row.TOTAL }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+              <div class="clearfix"></div>
+              <br />
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

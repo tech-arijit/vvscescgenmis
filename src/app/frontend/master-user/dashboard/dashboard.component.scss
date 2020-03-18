@@ -1,0 +1,42 @@
+.table.table-bordered>tbody>tr>td {
+    border-top: 1px solid #c5c4c4;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.bg-cesc {
+    border: solid 1px rgb(167, 152, 152);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.bg-hel {
+    border: solid 1px rgb(167, 152, 152);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.bg-dil {
+    border: solid 1px rgb(167, 152, 152);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.bg-cesc .panel-body,
+.bg-hel .panel-body,
+.bg-dil .panel-body {
+    min-height: 330px;
+    margin-bottom: 0 !important;
+}

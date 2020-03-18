@@ -1,0 +1,1335 @@
+<!-- {{formData.value | json}} -->
+<div class="page-content-wrap">
+    <!-- START RESPONSIVE TABLES -->
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="panel panel-default" id="alldata-table">
+
+                <!-- <div class="panel-heading bg-bv1">
+                    <h3 class="panel-title">GENERATION MIS</h3>
+                </div> -->
+
+                <div class="panel-body panel-body-table">
+                    <div class="form-horizontal" role="form">
+                        <div class="col-md-6 p-0">
+                            <form [formGroup]="formData" method="post">
+                                <div class="form-group">
+                                    <!-- <label class="col-xs-4 col-sm-2 col-md-2 control-label text-left">Dated On:</label> -->
+                                    <div class="col-xs-9 col-sm-7 col-md-5">
+                                        <mat-form-field>
+                                            <mat-label>Dated On</mat-label>
+                                            <input matInput [matDatepicker]="picker" formControlName="searchDate" class="form-control" [(ngModel)]="onDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
+                                        <button (click)="appSearchByDate()" class="btn btn-sm btn-info">Search</button>
+                                    </div>
+                                    <!-- <div>
+                                        <button type="button" class="btn btn-success btn-sm pull-right" style="cursor: pointer"
+                                            (click)="exportalldataexcel()" href="javascript:void(0)">
+                                            <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export To Excel
+                                        </button>
+                                    </div> -->
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 p-0 text-right">
+                            <div class="btn-group btn-group-sm" *ngIf="show">
+                                <button (click)=toggleDisplay(1) class="btn" [ngClass]="status1 ? 'btn-primary' : 'btn-default'"> {{ onDate | date : "dd-MM-y" }} </button>
+                                <button (click)=toggleDisplay(2) class="btn" [ngClass]="status2 ? 'btn-primary' : 'btn-default'">MTD</button>
+                                <button (click)=toggleDisplay(3) class="btn" [ngClass]="status3 ? 'btn-primary' : 'btn-default'">YTD</button>
+                            </div>
+                            <div class="btn-group btn-group-sm" *ngIf="hide">
+                                <button class="btn btn-default">On Date</button>
+                                <button class="btn btn-default">MTD</button>
+                                <button class="btn btn-default">YTD</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr />
+
+                <div>
+                    <div class="btn-group pull-right mr-5">
+                        <button type="button" class="btn btn-success btn-sm">Export Full Report</button>
+                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header"><a href="javascript:void(0)" (click)="exportalldataexcel()">Full Comparison Report</a></li>
+                            <!-- <li><a href="#">Export to Excel Two</a></li>
+                            <li><a href="#">Export to Excel Three</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="daily" [hidden]="showdaily">
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">GENERATION REPORT
+
+                    </h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13"> {{ onDate | date : "dd-MM-y" }} </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Generation Period</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Generation_Period">{{ dailyData['Generation_Period']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Units Generated</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Units_Generated">{{ dailyData['Units_Generated']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Sent Out</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Sent_Out_MERGE">{{ dailyData['Sent_Out_MERGE']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">4</td>
+                                        <td>Works in MU</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_MU">{{ dailyData['Works_in_MU']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">5</td>
+                                        <td>Works in %</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Works_in_PER">{{ dailyData['Works_in_PER']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">6</td>
+                                        <td>Plant Load Factor (PLF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PLF">{{ dailyData['PLF']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">7</td>
+                                        <td>Plant Availability Factor (PAF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.PAF">{{ dailyData['PAF']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">8</td>
+                                        <td>Coal Consumed</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Consumed">{{ dailyData['Coal_Consumed']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">9</td>
+                                        <td>Coal Figure</td>
+                                        <td class="text-center">Kg/kWh</td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.Coal_Figure">{{ dailyData['Coal_Figure']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">10</td>
+                                        <td>LDO Consumed</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Consumed">{{ dailyData['LDO_Consumed']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">11</td>
+                                        <td>LDO Figure</td>
+                                        <td class="text-center">ml/kWh</td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="dailyData.LDO_Figure">{{ dailyData['LDO_Figure']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">DC LOSS REPORT</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">{{ onDate | date : "dd-MM-y" }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Number of Trips</td>
+                                        <td class="text-center">No.</td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Number_of_Trips">{{ DailyDataDCLR['Number_of_Trips']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Forced Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Forced_Outage">{{ DailyDataDCLR['Forced_Outage']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Planned Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['BBGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['BBGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['BBGS_DAILY_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['SGS_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['SGS_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['HEL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['HEL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['DIL_DAILY_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['DIL_DAILY_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataDCLR.Planned_Outage">{{ DailyDataDCLR['Planned_Outage']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">COAL & LDO RECEIVED</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="12">{{ onDate | date : "dd-MM-y" }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Coal Received</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['BBGS_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['BBGS_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['SGS_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['SGS_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['HEL_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['HEL_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['DIL_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['DIL_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.Coal_Received">{{ DailyDataCLREC['Coal_Received']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>LDO Received</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['BBGS_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['BBGS_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['BBGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['SGS_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['SGS_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['SGS_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['HEL_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['HEL_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['HEL_DAILY_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['DIL_DAILY_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['DIL_DAILY_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataCLREC.LDO_Received">{{ DailyDataCLREC['LDO_Received']['DIL_DAILY_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="MTD" [hidden]="showmtd">
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">GENERATION REPORT</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">MTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Generation Period</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Generation_Period">{{ MtmData['Generation_Period']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Units Generated</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Units_Generated">{{ MtmData['Units_Generated']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Sent Out</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Sent_Out_MERGE">{{ MtmData['Sent_Out_MERGE']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">4</td>
+                                        <td>Works in MU</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_MU">{{ MtmData['Works_in_MU']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">5</td>
+                                        <td>Works in %</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Works_in_PER">{{ MtmData['Works_in_PER']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">6</td>
+                                        <td>Plant Load Factor (PLF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PLF">{{ MtmData['PLF']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">7</td>
+                                        <td>Plant Availability Factor (PAF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.PAF">{{ MtmData['PAF']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">8</td>
+                                        <td>Coal Consumed</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Consumed">{{ MtmData['Coal_Consumed']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">9</td>
+                                        <td>Coal Figure</td>
+                                        <td class="text-center">Kg/kWh</td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.Coal_Figure">{{ MtmData['Coal_Figure']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">10</td>
+                                        <td>LDO Consumed</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Consumed">{{ MtmData['LDO_Consumed']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">11</td>
+                                        <td>LDO Figure</td>
+                                        <td class="text-center">ml/kWh</td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtmData.LDO_Figure">{{ MtmData['LDO_Figure']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">DC LOSS REPORT</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">MTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Number of Trips</td>
+                                        <td class="text-center">No.</td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Number_of_Trips">{{ MtdDataDCLR['Number_of_Trips']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Forced Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Forced_Outage">{{ MtdDataDCLR['Forced_Outage']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Planned Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['BBGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['BBGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['BBGS_MTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['SGS_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['SGS_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['HEL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['HEL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['DIL_MTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['DIL_MTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MtdDataDCLR.Planned_Outage">{{ MtdDataDCLR['Planned_Outage']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">COAL & LDO RECEIVED</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="12">MTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Coal Received</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['BBGS_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['BBGS_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['SGS_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['SGS_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['HEL_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['HEL_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['DIL_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['DIL_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.Coal_Received">{{ MTDDataCLREC['Coal_Received']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>LDO Received</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['BBGS_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['BBGS_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['BBGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['SGS_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['SGS_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['SGS_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['HEL_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['HEL_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['HEL_MTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['DIL_MTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['DIL_MTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="MTDDataCLREC.LDO_Received">{{ MTDDataCLREC['LDO_Received']['DIL_MTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="YTD" [hidden]="showytd">
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">GENERATION REPORT</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">YTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Generation Period</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Generation_Period">{{ YtdData['Generation_Period']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Units Generated</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Units_Generated">{{ YtdData['Units_Generated']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Sent Out</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Sent_Out_MERGE">{{ YtdData['Sent_Out_MERGE']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">4</td>
+                                        <td>Works in MU</td>
+                                        <td class="text-center">MU</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_MU">{{ YtdData['Works_in_MU']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">5</td>
+                                        <td>Works in %</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center" colspan="4"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Works_in_PER">{{ YtdData['Works_in_PER']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">6</td>
+                                        <td>Plant Load Factor (PLF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PLF">{{ YtdData['PLF']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">7</td>
+                                        <td>Plant Availability Factor (PAF)</td>
+                                        <td class="text-center">%</td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center" colspan="3"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.PAF">{{ YtdData['PAF']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">8</td>
+                                        <td>Coal Consumed</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Consumed">{{ YtdData['Coal_Consumed']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">9</td>
+                                        <td>Coal Figure</td>
+                                        <td class="text-center">Kg/kWh</td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.Coal_Figure">{{ YtdData['Coal_Figure']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">10</td>
+                                        <td>LDO Consumed</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Consumed">{{ YtdData['LDO_Consumed']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">11</td>
+                                        <td>LDO Figure</td>
+                                        <td class="text-center">ml/kWh</td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdData.LDO_Figure">{{ YtdData['LDO_Figure']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">DC LOSS REPORT</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">YTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Unit 3</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                        <th>Unit 1</th>
+                                        <th>Unit 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Number of Trips</td>
+                                        <td class="text-center">No.</td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Number_of_Trips">{{ YtdDataDCLR['Number_of_Trips']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>Forced Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Forced_Outage">{{ YtdDataDCLR['Forced_Outage']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>Planned Outage</td>
+                                        <td class="text-center">Hrs.</td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['BBGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['BBGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['BBGS_YTD_UNIT3']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['SGS_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['SGS_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['HEL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['HEL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['DIL_YTD_UNIT1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['DIL_YTD_UNIT2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YtdDataDCLR.Planned_Outage">{{ YtdDataDCLR['Planned_Outage']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">COAL & LDO RECEIVED</h3>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="12">YTD</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                        <th>Wagon</th>
+                                        <th>Lorry</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Coal Received</td>
+                                        <td class="text-center">Te</td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['BBGS_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['BBGS_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['SGS_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['SGS_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['HEL_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['HEL_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['DIL_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['DIL_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.Coal_Received">{{ YTDDataCLREC['Coal_Received']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>LDO Received</td>
+                                        <td class="text-center">KL</td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['BBGS_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['BBGS_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['BBGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['SGS_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['SGS_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['SGS_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['HEL_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['HEL_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['HEL_YTD_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['DIL_YTD_WAGON']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['DIL_YTD_LORRY']}}</span></td>
+                                        <td class="text-center"><span *ngIf="YTDDataCLREC.LDO_Received">{{ YTDDataCLREC['LDO_Received']['DIL_YTD_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div [hidden]="showcoal">
+                    <h3 class="report-heading cl-bv1">COAL & LDO STOCK REPORT</h3>
+                    <div class="col-md-6 p-0">
+                        <div class="panel-body panel-body-table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-actions">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">Sl.</th>
+                                            <th rowspan="2">Details</th>
+                                            <th rowspan="2">UOM</th>
+                                            <th colspan="4">{{ onDate | date : "dd-MM-y" }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>BBGS</th>
+                                            <th>SGS</th>
+                                            <th>HEL</th>
+                                            <th>DIL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>Coal Stock</td>
+                                            <td class="text-center">Te</td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.Coal_Stock">{{ CoalLDOSTockReport['Coal_Stock']['BBGS']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.Coal_Stock">{{ CoalLDOSTockReport['Coal_Stock']['SGS']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.Coal_Stock">{{ CoalLDOSTockReport['Coal_Stock']['HEL']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.Coal_Stock">{{ CoalLDOSTockReport['Coal_Stock']['DIL']}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>LDO Stock</td>
+                                            <td class="text-center">KL</td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.LDO_Stock">{{ CoalLDOSTockReport['LDO_Stock']['BBGS']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.LDO_Stock">{{ CoalLDOSTockReport['LDO_Stock']['SGS']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.LDO_Stock">{{ CoalLDOSTockReport['LDO_Stock']['HEL']}}</span></td>
+                                            <td class="text-center"><span *ngIf="CoalLDOSTockReport.LDO_Stock">{{ CoalLDOSTockReport['LDO_Stock']['DIL']}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <h3 class="report-heading cl-bv1">ASH STOCK REPORT</h3>
+
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-actions">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">Sl.</th>
+                                        <th rowspan="3">Details</th>
+                                        <th rowspan="3">UOM</th>
+                                        <th colspan="13">{{ onDate | date : "dd-MM-y" }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">BBGS</th>
+                                        <th colspan="3">SGS</th>
+                                        <th colspan="3">HEL</th>
+                                        <th colspan="3">DIL</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Silo 1</th>
+                                        <th>Silo 2</th>
+                                        <th>EADT</th>
+                                        <th>Total</th>
+                                        <th>Silo 1</th>
+                                        <th>Silo 2</th>
+                                        <th>Total</th>
+                                        <th>Silo 1</th>
+                                        <th>Silo 2</th>
+                                        <th>Total</th>
+                                        <th>Silo 1</th>
+                                        <th>Silo 2</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>Silo Level (Meter empty from top)</td>
+                                        <td class="text-center">m</td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.BBGS_SILO1">{{ DailyDataASHSR['BBGS_SILO1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.BBGS_SILO2">{{ DailyDataASHSR['BBGS_SILO2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.BBGS_EATD">{{ DailyDataASHSR['BBGS_EATD']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.BBGS_TOTAL">{{ DailyDataASHSR['BBGS_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.SGS_SILO1">{{ DailyDataASHSR['SGS_SILO1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.SGS_SILO2">{{ DailyDataASHSR['SGS_SILO2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.SGS_TOTAL">{{ DailyDataASHSR['SGS_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.HEL_SILO1">{{ DailyDataASHSR['HEL_SILO1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.HEL_SILO2">{{ DailyDataASHSR['HEL_SILO2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.HEL_TOTAL">{{ DailyDataASHSR['HEL_TOTAL']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.DIL_SILO1">{{ DailyDataASHSR['DIL_SILO1']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.DIL_SILO2">{{ DailyDataASHSR['DIL_SILO2']}}</span></td>
+                                        <td class="text-center"><span *ngIf="DailyDataASHSR.DIL_TOTAL">{{ DailyDataASHSR['DIL_TOTAL']}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

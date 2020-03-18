@@ -1,0 +1,54 @@
+<div class="login-container">
+    <div class="row">
+        <div class="col-xs-6">
+            <img src="assets/img/login-rpsg.png" class="w-100" />
+        </div>
+        <div class="col-xs-6">
+            <img src="assets/img/login-cesc.png" class="pull-right w-100" />
+        </div>
+    </div>
+
+    <div class="login-box animated fadeInDown">
+        <!-- <div class="login-logo"></div> -->
+        <h2 class="projectname">GENERATION DASHBOARD</h2>
+        <div class="login-body">
+            <div>
+                <mat-spinner *ngIf="loader"></mat-spinner>
+            </div>
+
+
+            <div class="login-title"><strong>Welcome</strong></div>
+            <form [formGroup]="login" class="form-horizontal" method="post" (ngSubmit)="appLogin()">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="email" class="form-control" placeholder="Employee Code" autocomplete="username" formControlName="username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!-- <div class="col-md-6">
+                        <a routerLink="/user/forgotpassword" class="btn btn-link btn-block">Forgot your password?</a>
+                    </div> -->
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info btn-block">Log In</button>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        <a class="btn btn-link btn-block" routerLink="/user/register">New user?</a>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <br/><br/>
+    <div class="footer">
+        <div class="col-md-6 ftr-left">All Rights Reserved</div>
+        <div class="col-md-6 ftr-right">Design & Developed by <a href="http://www.viavitae.co.in/" target="_blank">Via Vitae Solutions</a></div>
+    </div>
+
+</div>

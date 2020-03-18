@@ -1,0 +1,131 @@
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    
+    table tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+    
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style>
+<div class="">
+    <div class="animated fadeInDown">
+        <div class="">
+            <div>
+                <mat-spinner *ngIf="loader"></mat-spinner>
+            </div>
+            <div class="login-title"><strong>USER DETAILS</strong></div>
+            <form [formGroup]="manageur" class="form-horizontal" method="post" (ngSubmit)="appManageUser()">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee Code">Employee Code :</label>
+                        <input type="text" class="form-control" placeholder="Employee Code" autocomplete="employeecode" formControlName="employeecode" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">User Name :</label>
+                        <input type="text" class="form-control" placeholder="User Name" formControlName="username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Password :</label>
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Name :</label>
+                        <input type="text" class="form-control" placeholder="Name" formControlName="name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Email :</label>
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Mobile No :</label>
+                        <input type="text" class="form-control" placeholder="Mobile No" formControlName="mobileno" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Role :</label>
+                        <div class="col-md-12">
+                            <ng-select formControlName="role" class="form-control" [items]="roleList" bindLabel="name" bindValue="id" [(ngModel)]="selectedRole">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="Employee_Code">Status :</label>
+                        <div class="col-md-12">
+                            <ng-select formControlName="status" class="form-control" [items]="statusList" bindLabel="name" bindValue="id" [(ngModel)]="selectedStatus">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <button type="submit" [disabled]="manageur.invalid" class="btn btn-info btn-block">Add User</button>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        <a class="btn btn-link btn-block" routerLink="/user/register">New user?</a>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <br /><br />
+        <div>
+            <strong>LIST OF USERS</strong>
+        </div>
+        <div>
+            <table style="width:100%;border:1px solid #000;">
+                <tr>
+                    <th>Sl.</th>
+                    <th>Employee Code</th>
+                    <th>User Name</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+                <tr *ngFor="let userListDetails of getUserList">
+                    <td>{{userListDetails.UserID}}</td>
+                    <td>{{userListDetails.EmpCode}}</td>
+                    <td>{{userListDetails.UserName}}</td>
+                    <td>{{userListDetails.Name}}</td>
+                    <td>{{userListDetails.EmailID}}</td>
+                    <td>{{userListDetails.ContactNo}}</td>
+                    <td>{{userListDetails.Role}}</td>
+                    <td>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-success btn-sm">Split Buttons</button>
+                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0)">Action</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <br /><br />
+</div>

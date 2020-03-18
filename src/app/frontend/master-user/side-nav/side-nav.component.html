@@ -1,0 +1,49 @@
+<div class="page-sidebar page-sidebar-fixed scroll">
+    <!-- START X-NAVIGATION -->
+    <ul class="x-navigation">
+        <li class="xn-logo hidden-md">
+            <a> </a>
+            <a class="x-navigation-control" (click)="navMinimize();"></a>
+        </li>
+        <li class="xn-profile">
+            <a class="profile-mini">
+                <img src="./assets/img/logo2.png" alt="BV Surveys" />
+            </a>
+            <div class="profile">
+                <!-- <div class="profile-image">
+                    <img src="./assets/img/logo2.png" alt="BV Surveys" />
+                </div> -->
+                <!-- <div class="profile-data">
+                    <div class="profile-data-name">GENERATION MIS</div>
+                    <div class="profile-data-title">Web Developer/Designer</div>
+                </div> -->
+                <!-- <div class="profile-controls">
+                    <a href="javascript:void(0)" class="profile-control-left"><span class="fa fa-info"></span></a>
+                    <a href="javascript:void(0)" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                </div> -->
+            </div>
+        </li>
+
+        <li routerLinkActive="active">
+            <a routerLink="/user/app/dashboard"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboards</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/user/app/bbgsmis"><span class="fa fa-table"></span> <span class="xn-text">Comparison Report</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/user/app/powergenmis"><span class="fa fa-table"></span> <span class="xn-text">Power Gen MIS</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/user/app/manageuser"><span class="fa fa-table"></span> <span class="xn-text">Manage User</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/user/app/changepassword"><span class="fa fa-key"></span> <span class="xn-text">Change Password</span></a>
+        </li>
+        <li routerLinkActive="active">
+            <a href="javascript:void(0)" (click)='logout()'><span class="fa fa-sign-out"></span> <span class="xn-text">Logout</span></a>
+        </li>
+
+
+    </ul>
+    <!-- END X-NAVIGATION -->
+</div>

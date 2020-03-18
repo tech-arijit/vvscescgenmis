@@ -1,0 +1,84 @@
+<div class="registration-container">
+    <div class="registration-box animated fadeInDown">
+        <div class="registration-logo"></div>
+        <h2 class="projectname">Online Survey Portal</h2>
+        <div class="registration-body">
+            <div>
+                <mat-spinner *ngIf="loader"></mat-spinner>
+            </div>
+            <div class="registration-title"><strong>Registration</strong></div>
+            <form [formGroup]="registration" class="form-horizontal" method="post" (ngSubmit)="register()">
+                <h4>Company Name</h4>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <ng-select [items]="companyList" bindLabel="CompanyName" bindValue="CompanyId" formControlName="companyId" placeholder="" [(ngModel)]="selCompany" (ngModelChange)="getDepartmentlist($event)" class="form-control">
+                        </ng-select>
+                    </div>
+                </div>
+                <h4>Department Name</h4>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <!-- <input type="text" class="form-control" placeholder="Department"> -->
+                        <ng-select [items]="deptList" bindLabel="DepartmentName" bindValue="DepartmentId" formControlName="deptId" [(ngModel)]="selDepartment" class="form-control">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <!-- <input type="text" class="form-control" placeholder="Employee Group"> -->
+                        <!--<ng-select [items]="groupList"
+                        bindLabel="EmployeeGroupName" 
+                        bindValue="EmployeeGroupId" 
+                        formControlName="empgrpId"
+                        [(ngModel)]="selEmpGroup"                        
+                        class="form-control">
+                    </ng-select>-->
+                    </div>
+                </div>
+                <h4>Personal info</h4>
+                <!--<div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" placeholder="Name" formControlName="empname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" placeholder="Mobile No" formControlName="mobileno">
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="email" class="form-control" placeholder="E-mail" formControlName="email">
+                    </div>
+                </div>
+
+                <!--<h4>Authentication</h4>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" placeholder="Re-Password" formControlName="repassword">
+                    </div>
+                </div>-->
+
+                <div class="form-group push-up-30">
+                    <div class="col-md-6">
+                        <a class="btn btn-link btn-block" routerLink="/user/login">Already have account?</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-danger btn-block" [disabled]="registration.invalid">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <br/><br/>
+    <div class="footer">
+        <div class="col-md-6 ftr-left">All Rights Reserved by Bureau Veritas India</div>
+        <div class="col-md-6 ftr-right">Design & Developed by <a href="http://www.viavitae.co.in/" target="_blank">Via Vitae Solutions</a></div>
+    </div>
+</div>
